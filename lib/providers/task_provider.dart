@@ -21,7 +21,7 @@ class TaskProvider with ChangeNotifier {
 
   void handleAddTask(Task task) {
     Task prepareDate = Task(
-        id: _tasks.length > 0 ? _tasks.length + 1 : 1,
+        id: _tasks.length + 1,
         title: task.title,
         isCompleted: task.isCompleted,
         description: task.description);
@@ -32,7 +32,7 @@ class TaskProvider with ChangeNotifier {
 
   void handleTaskComplete(int id) {
     Task updatedItem = Task(
-      id: id,
+      id: tasks[id].id,
       title: tasks[id].title,
       isCompleted: !tasks[id].isCompleted,
       description: tasks[id].description,

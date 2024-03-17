@@ -4,12 +4,14 @@ class TaskTitle extends StatelessWidget {
   final String title;
   final String? description;
   final bool isCompleted;
-  final Function(bool?) onChanged;
+  final Function()? onComplete;
+  final Function()? onDelete;
 
   TaskTitle(
-      {required this.title,
+      {this.onComplete,
+      required this.title,
       required this.isCompleted,
-      required this.onChanged,
+      this.onDelete,
       required this.description});
 
   @override
@@ -17,9 +19,27 @@ class TaskTitle extends StatelessWidget {
     return ListTile(
       title: Text(title),
       subtitle: Text(description!),
-      leading: Checkbox(
-        value: isCompleted,
-        onChanged: onChanged,
+      tileColor: isCompleted ? Colors.green : null,
+      leading: Row(
+        mainAxisSize: MainAxisSize.min, // Ensure buttons take minimum space
+        children: [
+          Padding(
+              padding: EdgeInsets.all(2.0),
+              child: IconButton(
+                onPressed: () {
+                  !isCompleted && onComplete!();
+                },
+                icon: Icon(Icons.incomplete_circle),
+              )),
+          Padding(
+              padding: EdgeInsets.all(2.0),
+              child: IconButton(
+                onPressed: () {
+                  onDelete!();
+                },
+                icon: Icon(Icons.delete),
+              )),
+        ],
       ),
     );
   }
