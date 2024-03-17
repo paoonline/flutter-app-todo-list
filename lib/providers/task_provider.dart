@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import '../models/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 var logger = Logger();
+var uuid = Uuid();
 
 class ITaskProvider {
   final int id;
@@ -47,10 +49,11 @@ class TaskProvider with ChangeNotifier {
   }
 
   Future<void> handleAddTask(Task task) async {
+    String id = uuid.v4();
     Task prepareDate = Task(
-        id: tasks.length,
+        id: id,
         title: task.title,
-        isCompleted: task.isCompleted,
+        isCompleted: false,
         description: task.description);
     _tasks.add(prepareDate);
     handleSetLocalData();
@@ -69,8 +72,8 @@ class TaskProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void handleTaskDelete(int id) {
-    List<Task> filteredTask = tasks.where((item) => item.id != id).toList();
+  void handleTaskDelete(String id) {
+    List<Task> filteredTask = _tasks.where((item) => item.id != id).toList();
     _tasks = filteredTask;
     handleSetLocalData();
     notifyListeners();
