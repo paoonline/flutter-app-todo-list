@@ -39,10 +39,12 @@ class AddTaskScreen extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                  key: Key('task_title'),
                   controller: _taskTitleController,
                   decoration: InputDecoration(labelText: 'Title'),
                   onChanged: (value) {}),
               TextField(
+                  key: Key('task_description'),
                   controller: _taskDescriptionController,
                   decoration: InputDecoration(labelText: 'Description'),
                   onChanged: (value) {})
