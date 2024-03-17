@@ -48,7 +48,7 @@ class TaskProvider with ChangeNotifier {
 
   Future<void> handleAddTask(Task task) async {
     Task prepareDate = Task(
-        id: _tasks.length + 1,
+        id: tasks.length,
         title: task.title,
         isCompleted: task.isCompleted,
         description: task.description);
