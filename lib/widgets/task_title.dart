@@ -25,12 +25,29 @@ class TaskTitle extends StatelessWidget {
         children: [
           Padding(
               padding: EdgeInsets.all(2.0),
-              child: IconButton(
-                onPressed: () {
-                  !isCompleted && onComplete!();
-                },
-                icon: Icon(Icons.incomplete_circle),
-              )),
+              child: !isCompleted
+                  ? ElevatedButton(
+                      onPressed: () {
+                        !isCompleted && onComplete!();
+                      },
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all<Size>(
+                            Size(70, 20)), // Set the fixed size
+                        // You can also customize other aspects of the button's appearance here, such as padding, background color, etc.
+                      ),
+                      child: Icon(Icons.incomplete_circle),
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        !isCompleted && onComplete!();
+                      },
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all<Size>(
+                            Size(70, 20)), // Set the fixed size
+                        // You can also customize other aspects of the button's appearance here, such as padding, background color, etc.
+                      ),
+                      icon: Icon(Icons.incomplete_circle),
+                    )),
           Padding(
               padding: EdgeInsets.all(2.0),
               child: IconButton(
