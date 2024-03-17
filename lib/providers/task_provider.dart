@@ -1,5 +1,16 @@
 import 'package:flutter/foundation.dart';
+import 'package:logger/logger.dart';
 import '../models/task.dart';
+
+var logger = Logger();
+
+class ITaskProvider {
+  final int id;
+
+  ITaskProvider({
+    required this.id,
+  });
+}
 
 class TaskProvider with ChangeNotifier {
   List<Task> _tasks = [];
@@ -8,12 +19,32 @@ class TaskProvider with ChangeNotifier {
     return [..._tasks];
   }
 
-  void addTask(Task task) {
-    _tasks.add(task);
+  void handleAddTask(Task task) {
+    Task prepareDate = Task(
+        id: _tasks.length > 0 ? _tasks.length + 1 : 1,
+        title: task.title,
+        isCompleted: task.isCompleted,
+        description: task.description);
+    _tasks.add(prepareDate);
+
     notifyListeners();
   }
 
-  // Implement methods to update and delete tasks
+  void handleTaskComplete(int id) {
+    Task updatedItem = Task(
+      id: id,
+      title: tasks[id].title,
+      isCompleted: !tasks[id].isCompleted,
+      description: tasks[id].description,
+    );
+    _tasks[id] = updatedItem;
+    notifyListeners();
+  }
 
-  // You can also add methods for fetching and managing tasks
+  void handleTaskDelete(int id) {
+    List<Task> filteredTask = tasks.where((item) => item.id != id).toList();
+    _tasks = filteredTask;
+
+    notifyListeners();
+  }
 }

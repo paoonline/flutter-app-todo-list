@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screens/todo_screen.dart';
 import 'package:provider/provider.dart';
-import 'providers/task_provider.dart';
+import 'package:todo/providers/task_provider.dart';
+import 'package:todo/screens/add_screen.dart';
+import 'package:todo/screens/todo_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TaskProvider(),
-      child: const MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => TaskProvider(),
+        ),
+      ],
+      child: MaterialApp(
         title: 'Flutter Provider Example',
-        home: MyHomePage(title: 'Flutter todo demo'),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => TodoScreen(),
+          '/add-task': (context) => AddTaskScreen(),
+        },
       ),
     );
   }
